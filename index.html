@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD Fashion - Mode Tendances</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- CSS personnalisé -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    /* Styles de base */
+:root {
+    --primary-color: #212529;
+    --secondary-color: #343a40;
+    --accent-color: #ff6b6b;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--dark-color);
+    padding-top: 56px; /* Pour compenser la navbar fixe */
+}
+
+/* Navigation */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.scrolled {
+    background-color: var(--primary-color) !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+.navbar-brand span {
+    color: var(--accent-color);
+}
+
+.nav-link {
+    font-weight: 500;
+    margin: 0 10px;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: var(--accent-color);
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Hero Section */
+.hero-section {
+    height: 100vh;
+    min-height: 600px;
+    background: url('Images/ChatGPT Image 18 juil. 2025, 12_37_22.png') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Sections */
+.section-title h2 {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 15px;
+}
+
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 3px;
+    background: var(--accent-color);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Cartes produits */
+.product-card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.product-card .badge {
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+}
+
+.product-card img {
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+.price {
+    font-weight: bold;
+    color: var(--accent-color);
+    font-size: 1.1rem;
+}
+
+/* Section Contact */
+.contact-box {
+    background-color: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.contact-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: var(--accent-color);
+}
+
+.social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+/* Bouton Retour en haut */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.back-to-top.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-5px);
+}
+
+/* Animations */
+.animate-delay-1 {
+    animation-delay: 0.1s;
+}
+
+.animate-delay-2 {
+    animation-delay: 0.2s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 500px;
+    }
+    
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+}
+</style>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand animate__animated animate__fadeInLeft" href="#">
+                <span class="fw-bold">AD</span> Fashion
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto animate__animated animate__fadeInRight">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#accueil">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#vetements">Vêtements</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#colliers">Colliers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#chaussures">Chaussures</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12 text-center animate__animated animate__fadeInUp">
+                    <h1 class="display-3 fw-bold text-white">AD Fashion</h1>
+                    <p class="lead text-white">Découvrez notre collection exclusive</p>
+                    <a href="#produits" class="btn btn-outline-light btn-lg mt-3 animate__animated animate__pulse animate__infinite">Voir les produits</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Produits Section -->
+    <section id="produits" class="py-5">
+        <div class="container">
+            <div class="section-title text-center mb-5 animate__animated animate__fadeIn">
+                <h2>Nos Collections</h2>
+                <p class="text-muted">Découvrez nos dernières tendances</p>
+            </div>
+
+            <!-- Vêtements -->
+            <div id="vetements" class="row mb-5">
+                <div class="col-12">
+                    <h3 class="mb-4 animate__animated animate__fadeInLeft">Vêtements</h3>
+                </div>
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp">
+                    <div class="card product-card h-100">
+                        <div class="badge bg-danger position-absolute">Nouveau</div>
+                        <img src="Images/Vêtements homme & femme, shoppez la mode en ligne - Copie.jpeg" class="card-img-top" alt="T-Shirt AD">
+                        <div class="card-body">
+                            <h5 class="card-title">T-Shirt AD Signature</h5>
+                            <p class="card-text">T-shirt en coton premium avec logo AD Fashion.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">25,000 FCFA</span>
+                                <a href="#contact" class="btn btn-sm btn-outline-dark">Commander</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="card product-card h-100">
+                        <img src="Images/ddec7607-9355-4e69-b1ee-6279ca011fd7 - Copie.jpeg" class="card-img-top" alt="Chemise AD">
+                        <div class="card-body">
+                            <h5 class="card-title">Chemise Slim Fit</h5>
+                            <p class="card-text">Chemise élégante pour toutes occasions.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">35,000 FCFA</span>
+                                <a href="#contact" class="btn btn-sm btn-outline-dark">Commander</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="card product-card h-100">
+                        <div class="badge bg-success position-absolute">Best Seller</div>
+                        <img src="Images/Vêtements homme & femme, shoppez la mode en ligne - Copie.jpeg" class="card-img-top" alt="Jean AD">
+                        <div class="card-body">
+                            <h5 class="card-title">Jean Slim Noir</h5>
+                            <p class="card-text">Jean de qualité supérieure, confort garanti.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">45,000 FCFA</span>
+                                <a href="#contact" class="btn btn-sm btn-outline-dark">Commander</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colliers -->
+            <div id="colliers" class="row mb-5">
+                <div class="col-12">
+                    <h3 class="mb-4 animate__animated animate__fadeInLeft">Colliers</h3>
+                </div>
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp">
+                    <div class="card product-card h-100">
+                        <img src="Images/colier  (1).jpeg" class="card-img-top" alt="Collier AD">
+                        <div class="card-body">
+                            <h5 class="card-title">Collier Argenté</h5>
+                            <p class="card-text">Collier en argent 925, design moderne.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">15,000 FCFA</span>
+                                <a href="#contact" class="btn btn-sm btn-outline-dark">Commander</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="card product-card h-100">
+                        <div class="badge bg-danger position-absolute">Nouveau</div>
+                        <img src="Images/colier  (2).jpeg" class="card-img-top" alt="Collier AD">
+                        <div class="card-body">
+                            <h5 class="card-title">Collier Doré</h5>
+                            <p class="card-text">Collier plaqué or, élégance garantie.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">18,000 FCFA</span>
+                                <a href="#contact" class="btn btn-sm btn-outline-dark">Commander</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="card product-card h-100">
+                        <img src="Images/colier  (3).jpeg" class="card-img-top" alt="Collier AD">
+                        <div class="card-body">
+                            <h5 class="card-title">Collier Perles</h5>
+                            <p class="card-text">Collier en perles naturelles, style unique.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">22,000 FCFA</span>
+                                <a href="#contact" class="btn btn-sm btn-outline-dark">Commander</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chaussures -->
+            <div id="chaussures" class="row mb-5">
+                <div class="col-12">
+                    <h3 class="mb-4 animate__animated animate__fadeInLeft">Chaussures</h3>
+                </div>
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp">
+                    <div class="card product-card h-100">
+                        <div class="badge bg-success position-absolute">Best Seller</div>
+                        <img src="Images/Chaussures casual pour hommes à semelle épaisse confortable et absorbante, avec tige classique noir et blanc_ Chaussures de sport polyvalentes et à lacets à l'avant, à semelle plate antidérapante et haute.jpeg" class="card-img-top" alt="Chaussures AD">
+                        <div class="card-body">
+                            <h5 class="card-title">Baskets AD Sport</h5>
+                            <p class="card-text">Baskets confortables pour un style décontracté.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">30,000 FCFA</span>
+                                <a href="#contact" class="btn btn-sm btn-outline-dark">Commander</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="card product-card h-100">
+                        <img src="Images/téléchargement (9).jpeg" class="card-img-top" alt="Chaussures AD">
+                        <div class="card-body">
+                            <h5 class="card-title">Derbies Cuir</h5>
+                            <p class="card-text">Derbies en cuir véritable, élégance masculine.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">50,000 FCFA</span>
+                                <a href="#contact" class="btn btn-sm btn-outline-dark">Commander</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="card product-card h-100">
+                        <div class="badge bg-danger position-absolute">Nouveau</div>
+                        <img src="Images/0599bee4-ffad-41f4-b373-67708c994eb8 - Copie.jpeg" class="card-img-top" alt="Chaussures AD">
+                        <div class="card-body">
+                            <h5 class="card-title">Sandales Été</h5>
+                            <p class="card-text">Sandales légères et confortables pour l'été.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price">25,000 FCFA</span>
+                                <a href="#contact" class="btn btn-sm btn-outline-dark">Commander</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <div class="section-title text-center mb-5 animate__animated animate__fadeIn">
+                <h2>Commandez Maintenant</h2>
+                <p class="text-muted">Rejoignez notre groupe WhatsApp pour passer commande</p>
+            </div>
+            <div class="row justify-content-center animate__animated animate__fadeInUp">
+                <div class="col-md-8 text-center">
+                    <div class="contact-box p-4 rounded">
+                        <i class="fab fa-whatsapp fa-4x mb-4 text-success"></i>
+                        <h3 class="mb-3">Rejoignez notre groupe WhatsApp</h3>
+                        <p class="mb-4">Commandez facilement en nous contactant sur WhatsApp. Obtenez des réponses rapides à vos questions et suivez votre commande en temps réel.</p>
+                        <a href="https://wa.me/225XXXXXXXXX" class="btn btn-success btn-lg" target="_blank">
+                            <i class="fab fa-whatsapp me-2"></i> Rejoindre le groupe
+                        </a>
+                        <div class="mt-4">
+                            <p>Ou contactez-nous directement :</p>
+                            <p class="fs-5"><i class="fas fa-phone me-2"></i> +225 XX XX XX XX</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">AD Fashion</h5>
+                    <p>Votre destination pour les dernières tendances en matière de vêtements, colliers et chaussures.</p>
+                    <div class="social-icons">
+                        <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Produits</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#vetements" class="text-white">Vêtements</a></li>
+                        <li><a href="#colliers" class="text-white">Colliers</a></li>
+                        <li><a href="#chaussures" class="text-white">Chaussures</a></li>
+                        <li><a href="#nouveautes" class="text-white">Nouveautés</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Aide</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Commandes</a></li>
+                        <li><a href="#" class="text-white">Livraison</a></li>
+                        <li><a href="#" class="text-white">Paiements</a></li>
+                        <li><a href="#" class="text-white">Retours</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Newsletter</h5>
+                    <p>Abonnez-vous pour recevoir nos offres spéciales</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Votre email">
+                        <button class="btn btn-dark" type="button">S'abonner</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2023 AD Fashion. Tous droits réservés.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white me-3">Conditions générales</a>
+                    <a href="#" class="text-white">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bouton Retour en haut -->
+    <a href="#" class="back-to-top animate__animated animate__fadeInUp">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Script personnalisé -->
+    <script src="script.js">
+        // Animation au défilement
+$(document).ready(function() {
+    // Ajoute la classe scrolled à la navbar lors du défilement
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 100) {
+            $('.navbar').addClass('scrolled');
+        } else {
+            $('.navbar').removeClass('scrolled');
+        }
+        
+        // Affiche/masque le bouton retour en haut
+        if ($(this).scrollTop() > 300) {
+            $('.back-to-top').addClass('active');
+        } else {
+            $('.back-to-top').removeClass('active');
+        }
+    });
+    
+    // Animation des éléments au défilement
+    $(window).scroll(function() {
+        $('.animate__animated').each(function() {
+            var position = $(this).offset().top;
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            
+            if (scroll + windowHeight > position) {
+                $(this).addClass($(this).data('animate'));
+            }
+        });
+    }).scroll(); // Déclenche l'événement au chargement
+    
+    // Scroll doux pour les liens d'ancrage
+    $('a[href*="#"]').on('click', function(e) {
+        e.preventDefault();
+        
+        $('html, body').animate(
+            {
+                scrollTop: $($(this).attr('href')).offset().top - 70,
+            },
+            500,
+            'linear'
+        );
+    });
+    
+    // Initialisation des tooltips Bootstrap
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+    </script>
+</body>
+</html>
